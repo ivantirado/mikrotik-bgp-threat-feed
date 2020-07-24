@@ -1,0 +1,13 @@
+Route Filter:
+
+add action=accept address-family=ip chain=malware-in comment="Malware IPV4" set-type=blackhole
+add action=accept address-family=ipv6 chain=malware-in comment="Malware IPV6" set-type=unreachable
+add action=discard chain=malware-out comment="Block all advertisements out"
+
+BGP Session:
+
+add address-families=ip,ipv6 in-filter=malware-in instance=Malware name=Malware out-filter=malware-out remote-address=<IP> \
+    remote-as=<ASN> tcp-md5-key=<PASSWORD> ttl=default
+
+add address-families=ip,ipv6 in-filter=malware-in instance=Malware name=Malware out-filter=malware-out remote-address=<IP> \
+    remote-as=<ASN> tcp-md5-key=<PASSWORD> ttl=default
